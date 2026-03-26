@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Anushka Kshatriya | Portfolio</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png?v=2" />
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet"/>
+  <style>
+    /* BASE RESET */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* DEEPER PASTEL COLOR THEME */
+    :root {
+      --bg-main: #F4F0E6;       /* Warm cream */
+      --bg-alt: #EBE5D9;        /* Darker pastel cream */
+      --card-bg: #FAFAF8;       /* Off-white for cards */
+      --text-main: #1A2A3A;     /* Dark slate for crisp readability */
+      --text-muted: #455666;    /* Darker muted slate for text */
+      --primary: #6B8B7B;       /* Deeper Sage Green */
+      --secondary: #87A7BC;     /* Deeper Pastel Blue */
+      --accent: #D49D88;        /* Deeper Pastel Peach */
+      --border: #DCD8CE;        /* Border line */
+      
+      --radius: 16px;           
+      --font-head: 'DM Serif Display', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+    }
+
+    html { 
+      scroll-behavior: smooth; 
+      scroll-padding-top: 80px; 
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* CUSTOM SCROLLBAR */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-alt); }
+    ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #557264; }
+
+    /* TYPOGRAPHY & GRADIENTS */
+    h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 400; color: var(--text-main); }
+    h1 { font-size: clamp(2.8rem, 6vw, 4.5rem); line-height: 1.1; margin-bottom: 0.5rem; }
+    h2 { font-size: clamp(2rem, 4vw, 2.5rem); margin-bottom: 2rem; color: var(--primary); }
+    h3 { font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--text-main); }
+    h4 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-main); font-family: var(--font-body); font-weight: 600; }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    p { margin-bottom: 1.2rem; color: var(--text-muted); }
+    ul { margin-left: 1.5rem; margin-bottom: 1.2rem; color: var(--text-muted); }
+    li { margin-bottom: 0.5rem; }
+    strong { color: var(--text-main); font-weight: 600; }
+
+    /* SCROLL REVEAL ANIMATION */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+    }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    /* NAVBAR */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(244, 240, 230, 0.85);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(220, 216, 206, 0.5);
+      height: 75px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5vw;
+    }
+    .nav-logo {
+      font-family: var(--font-head); font-size: 1.5rem;
+      color: var(--primary); text-decoration: none; font-weight: 600;
+    }
+    .nav-links { display: flex; gap: 1.8rem; list-style: none; margin: 0; }
+    .nav-links a {
+      text-decoration: none; color: var(--text-muted);
+      font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
+      transition: color 0.3s; position: relative;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+    .nav-links a::after {
+      content: ''; position: absolute; left: 0; bottom: -6px;
+      width: 0%; height: 2px; background: var(--primary); border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; border: none; background: none; }
+    .hamburger span { display: block; width: 25px; height: 2px; background: var(--text-main); transition: 0.3s; }
+
+    /* BUTTONS & LINKS */
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: linear-gradient(135deg, var(--primary), #557264); color: #fff;
+      font-family: var(--font-body); font-weight: 500; font-size: 0.95rem;
+      padding: 0.9rem 2.2rem; border-radius: 50px;
+      text-decoration: none; border: none;
+      transition: all 0.4s ease; box-shadow: 0 8px 20px rgba(107, 139, 123, 0.25); margin-top: 1rem;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(107, 139, 123, 0.4); }
+
+    .paper-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: linear-gradient(135deg, var(--secondary), #6c8a9e); color: #fff;
+      padding: 0.7rem 1.8rem; border-radius: 8px;
+      text-decoration: none; font-weight: 500; font-size: 0.9rem;
+      margin-top: 1rem; transition: all 0.3s; box-shadow: 0 4px 15px rgba(135, 167, 188, 0.3);
+    }
+    .paper-link:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(135, 167, 188, 0.4); }
+
+    /* LAYOUT & SECTIONS */
+    section { padding: 100px 5vw; }
+    .section-inner { max-width: 900px; margin: 0 auto; }
+    .bg-alt { background: var(--bg-alt); }
+
+    .section-label {
+      font-size: 0.8rem; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--accent);
+      display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;
+    }
+    .section-label::before { content: ''; display: block; width: 30px; height: 2px; background: var(--accent); }
+
+    /* HERO SECTION */
+    #hero {
+      min-height: 100vh; display: flex; align-items: center; padding-top: 100px;
+      position: relative; overflow: hidden;
+    }
+    .hero-blob-1, .hero-blob-2 {
+      position: absolute; border-radius: 50%; filter: blur(60px); z-index: 0;
+      animation: float 8s infinite alternate ease-in-out;
+    }
+    .hero-blob-1 { top: 10%; left: -5%; width: 400px; height: 400px; background: rgba(107, 139, 123, 0.2); }
+    .hero-blob-2 { bottom: 10%; right: -5%; width: 350px; height: 350px; background: rgba(135, 167, 188, 0.2); animation-delay: -4s; }
+    
+    @keyframes float { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(30px, 40px) scale(1.1); } }
+
+    .hero-grid { max-width: 1100px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 350px; gap: 60px; align-items: center; position: relative; z-index: 1; }
+    
+    .hero-photo-wrap { position: relative; display: flex; justify-content: center; align-items: center; }
+    .hero-photo-wrap::before {
+      content: ''; position: absolute; width: 108%; height: 108%;
+      border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--secondary)); 
+      opacity: 0.2; transform: translate(10px, 10px); z-index: 0; animation: float 6s infinite alternate ease-in-out;
+    }
+    .hero-photo {
+      width: 100%; max-width: 320px; aspect-ratio: 1/1; border-radius: 50%; object-fit: cover;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1); position: relative; z-index: 1; border: 8px solid var(--card-bg); display: block;
+    }
+
+    /* CARDS */
+    .card {
+      background: var(--card-bg); border-radius: var(--radius); padding: 2.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.02); margin-bottom: 2rem; border: 1px solid var(--border);
+      transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(107, 139, 123, 0.08), 0 0 15px rgba(107, 139, 123, 0.1);
+      border-color: rgba(107, 139, 123, 0.4);
+    }
+    
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    
+    .timeline-block { border-left: 2px solid var(--border); padding-left: 2.5rem; margin-bottom: 3.5rem; position: relative; transition: border-color 0.3s; }
+    .timeline-block:hover { border-color: var(--primary); }
+    .timeline-block::before {
+      content: ''; position: absolute; left: -8px; top: 5px; width: 14px; height: 14px;
+      border-radius: 50%; background: var(--bg-alt); border: 2px solid var(--primary);
+      transition: transform 0.3s, background 0.3s;
+    }
+    .timeline-block:hover::before { transform: scale(1.3); background: var(--primary); }
+    .timeline-date { font-size: 0.85rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 0.8rem; }
+
+    .narrative-text { font-size: 1.05rem; line-height: 1.8; color: var(--text-muted); margin-bottom: 1.5rem; }
+
+    /* MINIMAL SKILLS LAYOUT (NO EMOJIS) */
+    .skill-minimal-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem 4rem; margin-bottom: 4rem; }
+    .skill-minimal-group { padding-left: 1.5rem; border-left: 2px solid var(--border); position: relative; transition: border-color 0.3s ease; }
+    .skill-minimal-group:hover { border-left-color: var(--primary); }
+    .skill-minimal-group::before {
+      content: ''; position: absolute; left: -5px; top: 8px; width: 8px; height: 8px;
+      border-radius: 50%; background: var(--bg-alt); border: 2px solid var(--primary);
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    .skill-minimal-group:hover::before { background: var(--primary); transform: scale(1.4); box-shadow: 0 0 10px rgba(107, 139, 123, 0.3); }
+    .skill-minimal-title { font-size: 1.1rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.6rem; }
+    .skill-minimal-desc { font-size: 0.95rem; color: var(--text-muted); margin: 0; line-height: 1.7; }
+
+    /* CONTACT CARDS WITH SVGS */
+    .contact-card { display: flex; align-items: center; gap: 1.5rem; text-decoration: none; padding: 1.5rem; margin-bottom: 0; }
+    .contact-icon {
+      background: var(--bg-main); width: 50px; height: 50px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; color: var(--primary); flex-shrink: 0;
+      transition: all 0.4s ease;
+    }
+    .contact-icon svg { width: 22px; height: 22px; }
+    .contact-card:hover .contact-icon { background: var(--primary); color: #fff; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(107, 139, 123, 0.3); }
+
+    /* FOOTER */
+    footer { background: var(--text-main); color: #fff; text-align: center; padding: 2.5rem 5vw; font-size: 0.95rem; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+      .hero-photo-wrap { order: -1; }
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 75px; left: 0; right: 0; background: var(--card-bg); padding: 2rem 5vw; gap: 1.5rem; border-bottom: 1px solid var(--border); }
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+      section { padding: 70px 5vw; }
+      .card { padding: 1.8rem; }
+      .skill-minimal-wrapper { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#hero">Anushka Kshatriya</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#academic">Academic</a></li>
+    <li><a href="#internships">Internships</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#research">Research & Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#goals">Vision</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<section id="hero">
+  <div class="hero-blob-1"></div>
+  <div class="hero-blob-2"></div>
+  <div class="hero-grid">
+    <div class="hero-text reveal">
+      <div class="section-label">Portfolio</div>
+      <h1 class="gradient-text">Anushka Kshatriya</h1>
+      <h2 style="color: var(--text-muted); font-size: 1.8rem; margin-top: 0.5rem; font-weight: 300;">Chemical Engineer</h2>
+      <a class="btn-primary" href="AnushkaKshatriya_CV_Resume.pdf" download>Download Resume</a>
+    </div>
+    <div class="hero-photo-wrap reveal" style="transition-delay: 0.2s;">
+      <img class="hero-photo" src="profile_photo.jpeg" alt="Anushka Kshatriya"/>
+    </div>
+  </div>
+</section>
+
+<section id="intro" class="bg-alt">
+  <div class="section-inner">
+    <div class="section-label reveal">Introduction</div>
+    <div class="card reveal">
+      <p class="narrative-text">I am a Chemical Engineer with a published research paper, two years of industrial experience at one of the world's leading environmental solutions companies, and a clear conviction: that the most valuable engineering is the kind that solves problems the planet actually has.</p>
+      <p class="narrative-text">At Veolia Water Technologies & Solutions, I work at the intersection of chemistry, commerce, and sustainability, managing specialty chemical solutions for India's oil and gas sector, building markets from the ground up, and coordinating across six internal functions to deliver results. Before that, I spent my final year researching bio-based alternatives to synthetic waxes, work that found its way into a research publication in Biomass Conversion and Biorefinery, Springer Nature.</p>
+      <p class="narrative-text">My goal is straightforward: to combine technical rigour with commercial understanding and drive green technology initiatives that create practical, measurable change.</p>
+    </div>
+
+    <h3 class="reveal" style="margin-top: 3rem; margin-bottom: 1.5rem;">Key Strengths</h3>
+    <div class="grid-2">
+      <div class="card reveal" style="margin-bottom: 0; padding: 1.8rem;">
+        <h4>Technical Depth</h4>
+        <p style="font-size: 0.95rem; margin:0;">A strong foundation in chemical engineering principles, process chemicals, and water treatment technologies, applied across laboratory research and live industrial environments.</p>
+      </div>
+      <div class="card reveal" style="margin-bottom: 0; padding: 1.8rem; transition-delay: 0.1s;">
+        <h4>Commercial Acumen</h4>
+        <p style="font-size: 0.95rem; margin:0;">Proven ability to build markets, manage sales cycles, and engage with some of India's largest energy corporations, from first conversation to order execution.</p>
+      </div>
+      <div class="card reveal" style="margin-bottom: 0; padding: 1.8rem;">
+        <h4>Research Orientation</h4>
+        <p style="font-size: 0.95rem; margin:0;">A published researcher who brings the same analytical rigour to commercial challenges as to scientific ones.</p>
+      </div>
+      <div class="card reveal" style="margin-bottom: 0; padding: 1.8rem; transition-delay: 0.1s;">
+        <h4>Cross-Functional Agility</h4>
+        <p style="font-size: 0.95rem; margin:0;">Comfortable operating across marketing, finance, R&D, sourcing, operations, and management, translating between technical and business languages with ease.</p>
+      </div>
+    </div>
+    <div class="card reveal" style="margin-top: 1.5rem; padding: 1.8rem;">
+      <h4>Sustainability Mindset</h4>
+      <p style="font-size: 0.95rem; margin:0;">Every professional and academic decision has been guided by a genuine commitment to engineering that works with the environment, not against it.</p>
+    </div>
+  </div>
+</section>
+
+<section id="academic">
+  <div class="section-inner">
+    <div class="section-label reveal">Academic Profile</div>
+    <h2 class="reveal">The Making of an Engineer</h2>
+    
+    <div class="card reveal" style="border-left: 5px solid var(--primary);">
+      <h3>B.Tech in Chemical Engineering</h3>
+      <p style="font-weight: 500; font-size: 1.05rem;">Institute of Engineering & Technology (IET), Lucknow — AKTU University<br>GPA: 8.0 / 10.0</p>
+    </div>
+
+    <p class="narrative-text reveal">My engineering journey began at IET Lucknow, one of the most prestigious government institutions under A. P. J. Abdul Kalam Technical University, where I didn't just study Chemical Engineering, I lived it. Over four years, I built a rigorous foundation across core disciplines, including thermodynamics, fluid mechanics, mass transfer, reaction engineering, and heat transfer, the fundamental language of how matter and energy interact at scale.</p>
+    <p class="narrative-text reveal">But what set my academic path apart was a conscious choice to look beyond the conventional. By pursuing electives in Sustainability of Environment and Petroleum Engineering, I positioned myself at the intersection of two of the most defining tensions of our time, the global demand for energy and the urgent need to meet it responsibly. This wasn't just a curriculum decision; it was the beginning of a professional philosophy.</p>
+    <p class="narrative-text reveal">My GPA of 8.0/10 reflects consistent academic performance, but the numbers only tell part of the story. My most formative lessons came not from textbooks, but from laboratories, project rooms, and real-world environments, where theory met complexity, and problem-solving became personal.</p>
+    <p class="narrative-text reveal">Beyond academics, I actively engaged with the broader engineering community through competitions, volunteering, and extracurricular initiatives, experiences that sharpened both my technical instincts and my ability to collaborate, lead, and contribute meaningfully.</p>
+
+    <div class="card reveal" style="margin-top: 2.5rem;">
+      <h3 style="margin-bottom: 1rem;">What My B.Tech Gave Me Beyond a Degree</h3>
+      <ul style="line-height: 1.8; font-size: 1.05rem;">
+        <li>A strong analytical framework for approaching complex, process-driven problems</li>
+        <li>An awareness of how engineering decisions carry environmental and societal weight</li>
+        <li>The drive to seek hands-on application, not just theoretical understanding</li>
+        <li>A multidisciplinary perspective blending core engineering with energy and sustainability</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="internships" class="bg-alt">
+  <div class="section-inner">
+    <div class="section-label reveal">Early Exposure</div>
+    <h2 class="reveal">Internships</h2>
+    
+    <div style="margin-top: 3.5rem;">
+      
+      <div class="timeline-block reveal">
+        <span class="timeline-date">June 2022 | 1 Month | On-site–Bengaluru</span>
+        <h4>Research Intern | Defence Bioengineering & Electromedical Laboratory</h4>
+        <p style="font-weight: 600; color: var(--text-main); margin-bottom: 1rem;">DRDO</p>
+        
+        <p>My first research exposure came not in a university laboratory, but at one of India's most prestigious scientific institutions, the Defence Research and Development Organisation (DRDO). Working within DEBEL's research environment introduced me to the rigour, discipline, and precision that serious scientific work demands.</p>
+        <p>The project focused on a question that sits at the heart of the global climate crisis: how effectively can carbon-based materials remove CO₂ from the atmosphere through adsorption? Working with materials including Granular Activated Carbon (GAC), Carbon Molecular Sieve (CMS), and Impregnated Activated Carbon, I designed and executed adsorption-desorption experiments using a packed bed reactor setup, measuring adsorption capacities under controlled flow conditions using mass flow controllers and gas analyzers.</p>
+        <p>The experience introduced me to the full arc of experimental research: hypothesis, apparatus setup, data collection, analysis, and interpretation.</p>
+        <p>Working at DRDO at the end of my second year was formative in a way that coursework alone could not be, it made the environmental stakes of chemical engineering feel immediate and real.</p>
+        
+        <p style="margin-top: 1rem; color: var(--text-main);"><strong>Key Takeaways:</strong> CO₂ adsorption science, packed bed reactor operations, mass flow control, gas analysis, experimental research methodology, and laboratory discipline.</p>
+      </div>
+
+      <div class="timeline-block reveal">
+        <span class="timeline-date">July – August 2023 | 2 Months | On-site– Gurugram</span>
+        <h4>Summer Intern | CMS Operations</h4>
+        <p style="font-weight: 600; color: var(--text-main); margin-bottom: 0.5rem;">Veolia Water Technologies & Solutions</p>
+        <p style="font-size: 0.95rem; color: var(--primary); font-weight: 600; margin-bottom: 1rem;">South Asia Campus Internship Program, 2023 <br> Outcome: Pre-Placement Offer (PPO) Secured</p>
+        
+        <p>Veolia's Campus Internship Program places engineering students directly into live operational environments, and my two months within the Chemical & Monitoring Solutions (CMS) Operations function were anything but theoretical.</p>
+        <p>My project focused on understanding the Gas Cleaning Plant (GCP) circuit in the Steel Industry, a critical water and gas treatment system used in Blast Furnace and Basic Oxygen Furnace operations, and exploring its digitalization through Veolia's proprietary InSight platform. I gained hands-on exposure to the complete GCP circuit: from venturi scrubbers and thickeners to cooling towers, heat exchangers, and chemical dosing systems managing fouling control, pH regulation, and coagulation.</p>
+        <p>Beyond the technical depth, this internship introduced me to the real-world discipline of industrial operations, site safety protocols, cross-team communication, and the gap between classroom theory and field application.</p>
+        <p>The internship concluded with a Pre-Placement Offer, a direct invitation to return as a Graduate Engineer Trainee, which I accepted.</p>
+        
+        <p style="margin-top: 1rem; color: var(--text-main);"><strong>Key Takeaways:</strong> GCP process design, chemical dosing applications, Veolia's InSight digital monitoring platform, industrial site operations, and professional workplace conduct.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="section-inner">
+    <div class="section-label reveal">Professional Experience</div>
+    <h2 class="reveal">Work</h2>
+    <h3 class="reveal" style="font-weight: 600; color: var(--text-main); margin-bottom: 0.5rem;">Veolia - Water Tech</h3>
+    <p class="reveal" style="font-weight: 500; font-size: 1.2rem; color: var(--text-main); margin-bottom: 2.5rem;">Graduate Engineer Trainee → Technical Sales Engineer <br><span style="font-weight: 400; font-size: 1rem; color: var(--text-muted);">July 2024 – Present</span></p>
+    
+    <div class="card reveal">
+      <h3>Starting at the Deep End</h3>
+      <p>Veolia Water Technologies & Solutions is one of the world's leading environmental solutions companies, operating at the intersection of water, energy, and sustainability across industries that keep economies running. Joining their South Asia Graduate Program (Batch 2024) as a Graduate Engineer Trainee wasn't just a job; it was an accelerated education in how complex industrial systems actually work, and how to sell solutions into them.</p>
+      <p>The program was structured around two six-month rotations, each designed to expose me to a different dimension of the business. What I didn't expect was how quickly I'd go from learning the language of the industry to speaking it fluently in front of clients.</p>
+    </div>
+
+    <div style="margin-top: 3.5rem;">
+      <div class="timeline-block reveal">
+        <span class="timeline-date">Rotation I</span>
+        <h4>Product Sales | Commercial & Institutional Market</h4>
+        <p><strong>Project:</strong> Product Sales Overview and Market Research for Mobile STP</p>
+        <p>My first rotation placed me within the Commercial & Institutional (C&I) segment, focused on understanding the market potential for Mobile Sewage Treatment Plants. On paper, it was a market research project. In practice, it was a crash course in how industrial sales actually functions, from identifying prospects to building the tools that convert interest into business.</p>
+        <p>I independently contacted 40+ builders and tracked over 300 construction projects across India to map new business avenues for Veolia's C&I segment. Simultaneously, I built a structured database of 50+ MEP consultants PAN India, creating channels that the sales team could leverage for future collaborations. I also gained hands-on exposure to core water treatment technologies, Membrane Bio-Reactors (MBR) and Reverse Osmosis (RO), deepening my technical grounding alongside the commercial work.</p>
+        <p>One initiative I'm particularly proud of: collaborating with the marketing team to develop case studies as strategic tools to build customer confidence, turning successful project outcomes into living proof points for the sales process.</p>
+        <p><strong>Key Outcomes:</strong> Database of 300+ tracked projects, 50+ consultant contacts established, market potential analysis for Mobile STPs in the C&I segment, and case study development as a replicable marketing asset.</p>
+      </div>
+
+      <div class="timeline-block reveal">
+        <span class="timeline-date">Rotation II</span>
+        <h4>CSM Sales | Oil & Gas Market</h4>
+        <p><strong>Project:</strong> Exploring Opportunities and Market Potential for CSM in Oil & Gas</p>
+        <p>My second rotation moved me into a more strategically complex arena, the Oil & Gas segment within Veolia's Chemical Solutions & Monitoring (CSM) division. This is where Veolia provides specialty process and utility chemicals to upstream, midstream, and downstream operations: fouling control, corrosion inhibitors, biocides, H2S scavengers, demulsifiers, and more.</p>
+        <p>I mapped 45+ upstream deals across India, conducted competitive pricing analysis across 11 process chemicals, and tracked 10 major upcoming projects in the Chemical Process Industries (CPI) segment. I worked directly with major Indian energy players supporting live proposals, vendor registration processes, and tender bids.</p>
+        <p>One standout contribution: I assisted in the strategic procurement of specialized chemicals for Uran's Water Treatment Plant, from initial proposal through to order execution. I also developed a comprehensive Standard Operating Procedure (SOP) for post-sales operations, designed to streamline the sales cycle for both new and experienced team members. A field visit to Refinery gave me an invaluable ground-level understanding of downstream operations.</p>
+        <p><strong>Key Outcomes:</strong> 45+ deals mapped, competition analysis for 5 key specialty chemical applications, SOP developed, and active support across 5+ ongoing projects with India's largest energy corporations.</p>
+      </div>
+
+      <div class="timeline-block reveal">
+        <span class="timeline-date">Current Role</span>
+        <h4>Technical Sales Engineer — Chemical Solutions & Monitoring | Oil & Gas</h4>
+        <p>After completing the Graduate Program, I transitioned into a full-time role as a Technical Sales Engineer, a natural progression, but one that came with significantly expanded ownership.</p>
+        <p>My mandate today is to drive Veolia's penetration into the Indian upstream oil & gas market, one of the most complex, relationship-driven, and technically demanding segments in the industry. I manage the complete sales cycle: from identifying opportunities and reaching out to clients (both public sector giants like ONGC and OIL, and private players), to crafting technical proposals tailored to specific chemical challenges, through to post-purchase-order execution, dosing rate optimization, and EHS compliance.</p>
+        <p>The role is deeply cross-functional by nature. On any given week, I coordinate with marketing to strengthen brand visibility, work with sourcing to align inventory and delivery plans, engage with finance for payment tracking, consult the product application and R&D teams to identify the right chemical solution for each client's specific process challenge, and interface with operations for quality assurance and correct dosing. I also interact regularly with management on pipeline deals and costing decisions.</p>
+        <p>What makes this work meaningful to me goes beyond the commercial targets. Every time I help an oil & gas operation reduce corrosion, optimize process efficiency, or improve water quality compliance, I'm contributing, in a tangible, measurable way, to the sustainability goals that drew me to this field in the first place. Efficiency and environmental responsibility aren't opposing forces; this role has taught me they're deeply connected.</p>
+        
+        <div class="card" style="margin-top: 2rem; background: transparent; box-shadow: none; border-color: var(--primary);">
+          <p style="color: var(--text-main); font-weight: 600; font-size: 1.1rem; margin-bottom: 1rem;">Key Achievements:</p>
+          <ul style="font-size: 1rem;">
+            <li>Successfully penetrated the Indian upstream market with a strong deal pipeline and secured commercial wins</li>
+            <li>Established breakthrough contacts within top Indian oil & gas organizations</li>
+            <li>Initiated strategic outreach to EPC consultants, participated in industry expos, and developed case studies to expand Veolia's market reach</li>
+            <li>Actively contributing to sustainability through process optimization and cost efficiency improvements for industrial clients</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="research" class="bg-alt">
+  <div class="section-inner">
+    <div class="section-label reveal">Research & Projects</div>
+    <h2 class="reveal">Extraction and Characterization of Natural Wax from Colocasia Esculenta (L.)</h2>
+    
+    <div class="card reveal">
+      <h4 class="gradient-text" style="font-size: 1.2rem; margin-bottom: 1rem;">Final Year Project | Published Research</h4>
+      <p style="font-size: 1rem; margin-bottom: 0.5rem;"><strong>Department:</strong> Department of Chemical Engineering, IET Lucknow</p>
+      <p style="font-size: 1rem; margin-bottom: 0.5rem;"><strong>Under supervision of:</strong> Dr. Dhananjay Singh</p>
+      <p style="font-size: 1rem; margin-bottom: 1.5rem;"><strong>Team:</strong> Anushka Kshatriya, Rohan Gupta, Shreya Pandey</p>
+      
+      <p><strong>The Question That Started It All</strong><br>
+      The taro leaf, common, abundant, and largely overlooked, has a remarkable property: water doesn't stick to it. Droplets simply bead and roll away. This isn't accidental. It's the result of a complex epicuticular wax layer, one that has inspired biomimetic research into superhydrophobic surfaces for decades. What hadn't been studied in depth was how efficiently this wax could be extracted using accessible solvents, and whether it could serve as a viable, renewable alternative to the synthetic waxes that dominate industries from cosmetics to waterproof coatings. That gap is what our final year project set out to address.</p>
+      
+      <p><strong>Methodology</strong><br>
+      We employed Soxhlet extraction, a classical but rigorous solid-liquid extraction technique chosen for its efficiency, reproducibility, and lower solvent consumption compared to maceration. Fresh taro leaves sourced locally in Lucknow were shade-dried to remove moisture, crushed, and subjected to extraction using three solvents: chloroform and hexane (non-polar) and ethanol (polar). Each extraction ran for four cycles at 50°C using 120 ml of solvent, and the resulting extracts were evaporated and weighed to calculate yield percentages.<br><br>
+      For characterization, we used two complementary analytical techniques:<br>
+      - <strong>FTIR Spectroscopy</strong>, to identify the functional groups present in the crude wax, mapping absorption peaks to characteristic chemical bonds (C-H alkanes, C=O esters, aldehydes, and C-O stretching from alcohols and ethers).<br>
+      - <strong>Thin Layer Chromatography (TLC)</strong>, to separate and observe the component fractions under normal, ultraviolet, and infrared light, confirming the presence of both polar and non-polar compounds.<br>
+      Analytical facilities were provided by the Centre for Advanced Studies, Lucknow.</p>
+
+      <p><strong>Key Findings</strong><br>
+      The results told a clear story: solvent polarity is decisive in natural wax extraction. Non-polar solvents significantly outperformed the polar alternative. Hexane delivered the highest yield at 15.04%, followed by chloroform at 11.34%, while ethanol yielded a negligible 0.28%, confirming that taro's epicuticular wax is fundamentally non-polar in nature.<br><br>
+      However, yield alone wasn't the full picture. While hexane extracted the most material, chloroform emerged as the more suitable solvent for industrial-scale production due to its higher wax content purity. FTIR analysis confirmed the presence of alkanes, aldehydes, esters, and alcohols in the extracted wax, all characteristic markers of natural wax, while TLC validated the co-existence of polar and non-polar compounds in the extract.<br><br>
+      Most strikingly, the extracted wax demonstrated clear water-repellent behaviour, droplets glided freely across its surface, affirming its hydrophobic nature and its potential as a bio-based waterproofing material.</p>
+    </div>
+
+    <div class="card reveal" style="border-left: 5px solid var(--secondary);">
+      <h3>Published Paper</h3>
+      <p class="narrative-text">What began as a final year project evolved into a publication, extending our original work into a broader sustainability argument:</p>
+      <p style="font-weight: 600; font-size: 1.15rem; color: var(--text-main); line-height: 1.5; margin-bottom: 1.5rem;">"Extraction of Plant Wax from Colocasia Esculenta Using Polar and Non-Polar Solvents: A Sustainable Approach"</p>
+      <p style="font-size: 1rem; margin-bottom: 0.5rem;"><strong>Journal:</strong> Biomass Conversion and Biorefinery, Springer Nature | Published: March 2025</p>
+      <p style="font-size: 1rem; margin-bottom: 0.5rem;"><strong>Co-authors:</strong> Mukul Sengar, Sunita Singh, Shreya Pandey, Rohan Gupta, Deepak Singh, Vinay Mishra, Mohd Saeed, Balendu Shekher Giri, Raj Kumar Arya, Dhananjay Singh</p>
+      <p style="font-size: 1rem; margin-bottom: 1.5rem;"><strong>My Contribution:</strong> Methodology, Original Draft Preparation</p>
+      
+      <p>The published paper frames the extraction of taro wax not just as a chemistry experiment, but as a sustainability proposition, positioning Colocasia esculenta as an agro-waste resource whose wax could replace synthetic, petroleum-derived alternatives in applications spanning cosmetics, waterproofing, coatings, and fabrics.</p>
+      
+      <a href="https://example.com/research-paper-link" target="_blank" class="paper-link">View Published Research Paper ↗</a>
+    </div>
+
+    <div class="card reveal">
+      <h3>Why This Research Matters to Me</h3>
+      <p style="font-size: 1.05rem; line-height: 1.8;">This project crystallised something I had been sensing throughout my engineering education: that sustainability isn't a constraint on industrial progress, it's the direction it must move in. Finding a biodegradable, renewable, and affordable alternative to synthetic waxes from a plant most people consider an everyday vegetable felt like a small but genuine proof of that principle. It also planted the seed of a research orientation I've carried into my professional life, the conviction that the most valuable engineering solutions are the ones that work with natural systems, not around them.</p>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-label reveal">Skills</div>
+    <h2 class="reveal">Technical & Domain Skills</h2>
+    
+    <div class="skill-minimal-wrapper">
+      <div class="skill-minimal-group reveal">
+        <div class="skill-minimal-title">Chemical Engineering Fundamentals</div>
+        <p class="skill-minimal-desc">Thermodynamics, fluid mechanics, heat/mass transfer, reaction kinetics, and process design, applied to bridge the gap between theory and operational reality.</p>
+      </div>
+
+      <div class="skill-minimal-group reveal">
+        <div class="skill-minimal-title">Process & Specialty Chemicals</div>
+        <p class="skill-minimal-desc">Industrial applications including corrosion control, scale inhibition, H2S scavenging, demulsification, biocides, and fouling control for the oil and gas sector.</p>
+      </div>
+
+      <div class="skill-minimal-group reveal">
+        <div class="skill-minimal-title">Water Treatment Technologies</div>
+        <p class="skill-minimal-desc">Practical expertise in Membrane Bio-Reactors (MBR), Reverse Osmosis (RO), Sewage Treatment Plants (STP), and Water Treatment Plants (WTP).</p>
+      </div>
+
+      <div class="skill-minimal-group reveal">
+        <div class="skill-minimal-title">Laboratory & Analytical Techniques</div>
+        <p class="skill-minimal-desc">Proficient in Soxhlet extraction, Thin Layer Chromatography (TLC), and Fourier Transform Infrared Spectroscopy (FTIR) for applied research.</p>
+      </div>
+
+      <div class="skill-minimal-group reveal">
+        <div class="skill-minimal-title">Market Research & Competitive Analysis</div>
+        <p class="skill-minimal-desc">Mapping large industrial markets, tracking 300+ construction projects, collating 45+ upstream oil & gas deals, and conducting competitive pricing analysis.</p>
+      </div>
+
+      <div class="skill-minimal-group reveal">
+        <div class="skill-minimal-title">Tools & Platforms</div>
+        <p class="skill-minimal-desc">Winflows (CRM), advanced Microsoft Excel (database curation & market tracking), and Microsoft PowerPoint for client presentations.</p>
+      </div>
+    </div>
+
+    <h2 class="reveal" style="margin-top: 5rem;">Soft Skills</h2>
+    <div class="skill-minimal-wrapper">
+      <div class="skill-minimal-group reveal">
+        <div class="skill-minimal-title">Cross-Functional Collaboration</div>
+        <p class="skill-minimal-desc">Translating between technical and commercial languages fluently across marketing, sourcing, finance, R&D, operations, and EHS.</p>
+      </div>
+
+      <div class="skill-minimal-group reveal">
+        <div class="skill-minimal-title">Client Communication & Pitching</div>
+        <p class="skill-minimal-desc">Direct, adaptive communication from cold outreach (40+ builders, 50+ MEP consultants) to pitching chemical solutions to India's largest PSUs.</p>
+      </div>
+
+      <div class="skill-minimal-group reveal">
+        <div class="skill-minimal-title">Negotiation & Stakeholder Management</div>
+        <p class="skill-minimal-desc">Managing complex, multi-party procurement environments, vendor registrations, tender submissions, and strategic chemical procurement.</p>
+      </div>
+
+      <div class="skill-minimal-group reveal">
+        <div class="skill-minimal-title">Problem Solving & Adaptive Thinking</div>
+        <p class="skill-minimal-desc">Treating operational constraints as design problems with workable solutions, from lab troubleshooting to field market entry strategy.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="goals" class="bg-alt">
+  <div class="section-inner">
+    <div class="section-label reveal">Vision</div>
+    <h2 class="reveal">Future Goals</h2>
+    
+    <div class="card reveal" style="border-left: 5px solid var(--accent);">
+      <h3>Where It All Began — Before the Degrees and the Internships</h3>
+      <p class="narrative-text">I grew up in Ghaziabad. For seventeen years, it was home, and for seventeen years, it was also consistently ranked among the most polluted cities on the planet. The air carried a weight to it. On bad days, the sky didn't turn blue. You didn't need a report to tell you something was wrong; you felt it in your lungs, your eyes, the way mornings smelled.</p>
+      <p class="narrative-text">Most people find their mission through inspiration. Mine came through something more immediate, the lived reality of what happens when industrial progress and environmental responsibility are treated as opposing forces. I don't want to see the world become what Ghaziabad already is. That's not a policy position. It's personal.</p>
+      <p class="narrative-text">Everything that followed, the engineering degree, the research into bio-based wax alternatives, the work at Veolia optimising chemical processes for industrial clients, has been, in some way, a response to those seventeen years.</p>
+    </div>
+
+    <div class="card reveal" style="border-left: 5px solid var(--primary);">
+      <h3>Where I Am Now — And What's Missing</h3>
+      <p class="narrative-text">Two years into my career as a Technical Sales Engineer at Veolia Water Technologies & Solutions, I've developed a grounded understanding of how industry actually works, its pressures, its procurement cycles, its resistance to change, and the moments where the right technical solution can shift the equation entirely. I've worked across the oil and gas sector, navigated complex cross-functional environments, and seen first-hand how process optimisation and chemical efficiency directly reduce environmental footprint.</p>
+      <p class="narrative-text">But I've also hit the ceiling of what experience alone can give me. The problems I want to solve, decarbonisation of industrial processes, the transition to renewable energy systems, the scaling of green technologies, require a depth of scientific and systems-level thinking that demands formal, rigorous advanced study.</p>
+      <p class="narrative-text" style="color: var(--text-main); font-weight: 500;">That's what brings me to pursue an MS in Chemical Engineering with a strong focus on Sustainability and Renewable Energy.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card reveal" style="margin-bottom: 0; padding: 2rem;">
+        <h4 class="gradient-text" style="font-size: 1.2rem;">Short-Term Vision</h4>
+        <p style="font-size: 1rem; line-height: 1.7;">In the near term, my goal is to deepen my technical expertise at the intersection of chemical engineering and sustainable process design — and emerge equipped to move beyond execution into strategy. Within two to three years of completing my master's, I aim to step into a role as a Project Manager or Sustainability Consultant, working with industries to design and implement transitions toward cleaner, more efficient operations. Not greenwashing — practical, measurable, engineered change.</p>
+      </div>
+      <div class="card reveal" style="margin-bottom: 0; padding: 2rem; transition-delay: 0.1s;">
+        <h4 class="gradient-text" style="font-size: 1.2rem;">Long-Term Vision</h4>
+        <p style="font-size: 1rem; line-height: 1.7;">Over the longer horizon, I want to be at the helm of a green technology company — one that develops and deploys solutions to real environmental problems at scale. Not a company built on promises, but one built on process, rigour, and impact that can be quantified. I'm not interested in grand declarations; I'm interested in the kind of work that quietly makes the world function better for the people living in it. My broader mission is simple, if not easy: to align my career with the development of the planet rather than against it.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-label reveal">Get in Touch</div>
+    <h2 class="reveal">Contact</h2>
+    
+    <div class="grid-2">
+      <a href="mailto:anushkakshatriya06@gmail.com" class="card contact-card reveal">
+        <div class="contact-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+        </div>
+        <div>
+          <h4 style="margin: 0; color: var(--text-main); font-size: 1.15rem;">Email</h4>
+          <p style="margin: 0; font-size: 0.95rem; color: var(--text-muted);">anushkakshatriya06@gmail.com</p>
+        </div>
+      </a>
+      
+      <a href="tel:+919990092207" class="card contact-card reveal" style="transition-delay: 0.1s;">
+        <div class="contact-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        </div>
+        <div>
+          <h4 style="margin: 0; color: var(--text-main); font-size: 1.15rem;">Phone</h4>
+          <p style="margin: 0; font-size: 0.95rem; color: var(--text-muted);">+91 99900 92207</p>
+        </div>
+      </a>
+
+      <a href="https://linkedin.com/in/anushka-kshatriya" target="_blank" class="card contact-card reveal">
+        <div class="contact-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+        </div>
+        <div>
+          <h4 style="margin: 0; color: var(--text-main); font-size: 1.15rem;">LinkedIn</h4>
+          <p style="margin: 0; font-size: 0.95rem; color: var(--text-muted);">linkedin.com/in/anushka-kshatriya</p>
+        </div>
+      </a>
+
+      <a href="https://github.com/anushka-kshatriya" target="_blank" class="card contact-card reveal" style="transition-delay: 0.1s;">
+        <div class="contact-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+        </div>
+        <div>
+          <h4 style="margin: 0; color: var(--text-main); font-size: 1.15rem;">GitHub</h4>
+          <p style="margin: 0; font-size: 0.95rem; color: var(--text-muted);">github.com/anushka-kshatriya</p>
+        </div>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+    <p>Portfolio of Anushka Kshatriya · Chemical Engineer</p>
+    
+    <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 12px; opacity: 0.7;">
+      <img src="favicon.png" alt="Renewable Energy" style="width: 20px; height: 20px; filter: brightness(0) invert(1);">
+      <p style="font-size: 0.75rem; margin: 0;">
+        <a href="https://www.flaticon.com/free-icons/renewable-energy" title="renewable energy icons" target="_blank" style="color: inherit; text-decoration: none;"></a>
+      </p>
+    </div>
+  </footer>
+
+<script>
+  /* --- NAVBAR LOGIC --- */
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+  const links = navLinks.querySelectorAll('a');
+  const sections = document.querySelectorAll('section');
+
+  // Toggle mobile menu
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+
+  // Custom Smooth Scroll Logic
+  links.forEach(link => {
+    link.addEventListener('click', function(e) {
+      const targetAttr = this.getAttribute('href');
+      
+      if(targetAttr.startsWith('#')) {
+        e.preventDefault(); 
+        navLinks.classList.remove('open'); 
+        
+        const targetId = targetAttr.substring(1);
+        const targetSection = document.getElementById(targetId);
+        
+        if(targetSection) {
+          const navHeight = document.querySelector('nav').offsetHeight;
+          const targetPosition = targetSection.getBoundingClientRect().top + window.scrollY - navHeight;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }
+    });
+  });
+
+  // Scroll Spy Logic
+  window.addEventListener('scroll', () => {
+    let current = '';
+    const navHeight = document.querySelector('nav').offsetHeight;
+
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      if (pageYOffset >= (sectionTop - navHeight - 150)) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    links.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href').substring(1) === current) {
+        link.classList.add('active');
+      }
+    });
+  });
+
+  /* --- SCROLL REVEAL ANIMATIONS --- */
+  const reveals = document.querySelectorAll('.reveal');
+  const revealOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px"
+  };
+
+  const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) {
+        entry.target.classList.add('active');
+        observer.unobserve(entry.target); 
+      }
+    });
+  }, revealOptions);
+
+  reveals.forEach(reveal => {
+    revealOnScroll.observe(reveal);
+  });
+</script>
+
+</body>
+</html>
